@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: food-delivery-system
+
+  # PostgreSQL Configuration (For Orders)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/food_delivery
+    username: root
+    password: password # Change this if your docker-compose uses a different password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # This is the magic command that creates your tables automatically
+    show-sql: true # This will print the generated SQL to your console so you can see it working
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  # MongoDB Configuration (For Restaurants)
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: restaurant_db
+  # Redis Configuration (For Caching)
+  redis:
+    host: localhost
+    port: 6379
+
+  # Kafka Configuration (For Event Messaging)
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: food-delivery-group
+
+server:
+  port: 8082
+  host: localhost
+  servlet:
+    context-path: /application
