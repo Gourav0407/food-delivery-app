@@ -25,7 +25,7 @@ public class OrderCustomRepoImpl implements OrderCustomRepo {
 
     @Override
     @Transactional
-    public boolean cancelOrder(Long id) {
+    public boolean changeStatus(Long id, Status status) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -36,7 +36,8 @@ public class OrderCustomRepoImpl implements OrderCustomRepo {
         Root<Order> root = update.from(Order.class);
 
         // 3. The SET clause: o.status = CANCELLED
-        update.set(root.get("status"), Status.CANCELLED);
+        update.set(root.get("status"), status);
+
 
         update.where(
                 cb.and(
