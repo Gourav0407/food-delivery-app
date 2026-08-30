@@ -1,12 +1,12 @@
 package com.delivery.food_delivery_system.order.controller;
 
+import com.delivery.food_delivery_system.order.dto.CreateOrderDto;
 import com.delivery.food_delivery_system.order.entity.Order;
 import com.delivery.food_delivery_system.order.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,7 +34,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody Order order){
+    public ResponseEntity<String> createOrder(@RequestBody CreateOrderDto order){
 
         Order savedOrder= orderService.createOrder(order);
 

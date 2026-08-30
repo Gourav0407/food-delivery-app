@@ -1,10 +1,7 @@
 package com.delivery.food_delivery_system.order.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 /**
  * @author Gourav
@@ -14,6 +11,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "order_items")
 public class OrderItem {
 
