@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import tools.jackson.databind.annotation.JsonSerialize;
 import tools.jackson.databind.ser.std.ToStringSerializer;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     @Id
     @Field("_id")
