@@ -22,6 +22,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: restaurant_db
+      auto-index-creation: true
   # Redis Configuration (For Caching)
   redis:
     host: localhost

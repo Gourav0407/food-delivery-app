@@ -2,10 +2,7 @@ package com.delivery.food_delivery_system.order.entity;
 
 import com.delivery.food_delivery_system.order.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
@@ -22,6 +19,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Order {
 
     @Id
@@ -43,6 +41,7 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
+    @Builder.Default
     private List<OrderItem> orderItemList= new ArrayList<>();
 
 
