@@ -18,11 +18,9 @@ spring:
         format_sql: true
 
   # MongoDB Configuration (For Restaurants)
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017
-      database: restaurant_db
-      auto-index-creation: true
+  mongodb:
+    uri: mongodb://localhost:27022/restaurant_db
+    auto-index-creation: true
   # Redis Configuration (For Caching)
   redis:
     host: localhost

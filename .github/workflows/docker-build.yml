@@ -1,0 +1,26 @@
+name: Build and Publish image on Docker Hub
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+
+jobs:
+  publish-image:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Build Docker Image
+        run: docker build . -t gouravch0udhary/food-delivery-app:latest
+      - name: Publish on Dockerhub
+        run: |
+          docker login -u gouravch0udhary -p ${{ secrets.DOCKER_SECRET }}
+          docker push gouravch0udhary/food-delivery-app:latest
+
+
+
+

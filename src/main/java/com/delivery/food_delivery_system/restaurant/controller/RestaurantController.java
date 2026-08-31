@@ -56,11 +56,22 @@ public class RestaurantController {
 
     }
 
-    @PostMapping("/{restaurantId}")
+    @PostMapping("/add-menu-item/{restaurantId}")
     public ResponseEntity<String> addMenuItem(@RequestBody MenuItem item, @PathVariable ObjectId restaurantId){
 
         if(restaurantService.addMenuItem(item,restaurantId)){
             String success= item.getName()+ " added successfully in your menu";
+            return new ResponseEntity<>(success, HttpStatus.CREATED);
+        }
+        return ResponseEntity.badRequest().body("Could not add item");
+
+    }
+
+    @PostMapping("/add-menu-items/{restaurantId}")
+    public ResponseEntity<String> addMenuItem(@RequestBody List<MenuItem> items, @PathVariable ObjectId restaurantId){
+
+        if(restaurantService.addMenuItem(items,restaurantId)){
+            String success= "All the items added successfully in your menu";
             return new ResponseEntity<>(success, HttpStatus.CREATED);
         }
         return ResponseEntity.badRequest().body("Could not add item");
@@ -78,7 +89,7 @@ public class RestaurantController {
     }
 
     @PatchMapping("{restaurantId}")
-    public ResponseEntity<String> updatemenuItem(@PathVariable ObjectId restaurantId, @RequestBody MenuItem item){
+    public ResponseEntity<String> updateMenuItem(@PathVariable ObjectId restaurantId, @RequestBody MenuItem item){
 
         if(restaurantService.updateMenuItem(item,restaurantId)){
             String success= item.getName()+ " updated successfully in your menu";
