@@ -11,7 +11,7 @@ services:
   mongodb:
     image: mongo:6.0
     ports:
-      - "27017:27017"
+      - "27022:27017"
 
   redis:
     image: redis:7.0
@@ -25,11 +25,34 @@ services:
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      # 1. Define three distinct ports (Internal, External, Controller)
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      # 2. Advertise the internal name to Docker apps, and localhost to your laptop
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:9092
+      # 3. Map everything to PLAINTEXT security
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      # 4. Tell brokers to communicate internally
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+  zomato-copy:
+    image: food-delivery-app:1.0
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongodb
+      - kafka
+      - redis
+      - postgres
+    environment:
+      # This overrides the application.properties so it points to the containers, not localhost!
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      # Assuming you have PostgreSQL running locally, we need a special host for it to reach your Windows machine
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/food_delivery
+      - SPRING_MONGODB_URI=mongodb://mongodb:27017/restaurant_db

@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Gourav
  **/
@@ -25,14 +27,14 @@ public class RestaurantCustomRepoImpl implements RestaurantCustomRepo {
     }
 
 
-    public boolean addMenuItem(MenuItem item, ObjectId restaurantId){
+    public boolean addMenuItem(List<MenuItem> items, ObjectId restaurantId){
         Query query=new Query();
 
         query.addCriteria(Criteria.where("_id").is(restaurantId));
 
         Update update = new Update();
 
-        update.push("menu",item);
+        update.push("menu").each(items);
 
         UpdateResult result=mongoTemplate.updateFirst(query,update, Restaurant.class);
 

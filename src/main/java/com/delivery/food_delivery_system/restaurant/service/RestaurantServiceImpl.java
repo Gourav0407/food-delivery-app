@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,11 +42,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findAll();
     }
 
+
+    public boolean addMenuItem(MenuItem item, ObjectId restaurantId) {
+        return addMenuItem(List.of(item),restaurantId);
+    }
+
     @Override
     @CacheEvict(value = "restaurants", key = "#restaurantId")
-    public boolean addMenuItem(MenuItem item, ObjectId restaurantId) {
-        item.setId(new ObjectId());
-        return restaurantRepository.addMenuItem(item,restaurantId);
+    public boolean addMenuItem(List<MenuItem> items, ObjectId restaurantId) {
+        items.forEach(item-> item.setId(new ObjectId()));
+        return restaurantRepository.addMenuItem(items,restaurantId);
     }
 
     @Override

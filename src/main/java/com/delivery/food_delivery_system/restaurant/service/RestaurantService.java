@@ -19,7 +19,10 @@ public interface RestaurantService {
 
     boolean addMenuItem(MenuItem item, ObjectId id);
 
+    boolean addMenuItem(List<MenuItem> items, ObjectId restaurantId);
+
     boolean deleteMenuItem(ObjectId itemId, ObjectId restaurantId);
 
     boolean updateMenuItem(MenuItem item, ObjectId restaurantId);
+
 }
