@@ -32,6 +32,19 @@ spring:
     consumer:
       group-id: food-delivery-group
 
+  #Mail Configuration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: gouravchoudhary7442@gmail.com
+    password: hehn mequ xmbd imua
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 server:
   port: 8082
   host: localhost

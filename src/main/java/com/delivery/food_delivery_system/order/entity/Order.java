@@ -31,6 +31,7 @@ public class Order {
     private String customerEmail;
     @NonNull
     private String restaurantId;
+    private String restaurantName;
     private Double amount;
     @Enumerated(EnumType.STRING)
     private Status status;

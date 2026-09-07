@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService{
             throw new RuntimeException("No valid menu items found in the order");
         }
 
-        Order actualOrder=Order.builder().restaurantId(order.restaurantId()).customerName(order.customerName()).customerEmail(order.customerEmail()).orderItemList(orderItemList).amount(orderItemList.stream().mapToDouble(OrderItem::getPrice).sum()).build();
+        Order actualOrder=Order.builder().restaurantName(restaurant.getName()).restaurantId(order.restaurantId()).customerName(order.customerName()).customerEmail(order.customerEmail()).orderItemList(orderItemList).amount(orderItemList.stream().mapToDouble(OrderItem::getPrice).sum()).build();
         actualOrder.setStatus(Status.PENDING);
 
         Order postSave= orderRepository.save(actualOrder);

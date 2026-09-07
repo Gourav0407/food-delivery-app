@@ -40,7 +40,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
 
   zomato-copy:
-    image: food-delivery-app:latest
+    image: gouravch0udhary/food-delivery-app:latest
     ports:
       - "8082:8082"
     depends_on:
